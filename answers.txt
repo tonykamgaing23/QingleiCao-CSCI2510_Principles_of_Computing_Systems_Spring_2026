@@ -1,0 +1,45 @@
+1.
+
+2.#include <stdio.h>
+
+3.
+int printf(const char *format, ...);
+
+int fprintf(FILE *stream, const char *format, ...);
+
+fprintf() takes an extra first argument: a pointer to a FILE stream (such as stdout, stderr, or a file).
+printf() always prints to standard output.
+4.
+printf() prints to standard output.
+fprintf() prints to the specified output stream.
+So fprintf() is more general because it can write to files, sockets, or the terminal.
+5. 
+Hello, world from fprintf!
+6.
+Section 2 is System Calls.
+7.
+#include <unistd.h>
+8./...>>>
+9.
+#include <unistd.h>
+
+int main(int argc, char* argv[]) {
+    const char msg[] = "Hello, world from write!\n";
+    write(STDOUT_FILENO, msg, 26);
+    return 0;
+}
+10.
+If you change:
+write(STDOUT_FILENO, msg, 1000);
+The program prints the real message and other wasteful characters.
+This happens because write() keeps reading memory past the end of the string than printing whatever bytes exist there.
+This is undefined behavior and can crash the program.
+11.
+Use C library functions when:
+You want portability (works on Windows, macOS, Linux).
+You want safer, higher-level tools (like fprintf, fopen, malloc).
+Use system calls when:
+You need OS-level control.
+You want maximum performance or direct hardware/OS interaction.
+You are writing kernels, shells, or low-level tools.
+12.
